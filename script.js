@@ -1,74 +1,111 @@
-// Select all sections and navigation links
+// =========================
+// Navigation Active State
+// =========================
+
 let sections = document.querySelectorAll('section');
 let navLinks = document.querySelectorAll('header nav a');
 
-// Highlight active navigation link while scrolling
-window.onscroll = () => {
+window.addEventListener('scroll', () => {
 
-    sections.forEach(sec => {
+    let current = '';
 
-        let top = window.scrollY;
-        let offset = sec.offsetTop - 150;
-        let height = sec.offsetHeight;
-        let id = sec.getAttribute('id');
+    sections.forEach(section => {
 
-        if (top >= offset && top < offset + height) {
+        const sectionTop = section.offsetTop - 150;
+        const sectionHeight = section.offsetHeight;
 
-            navLinks.forEach(links => {
-                links.classList.remove('active');
-            });
+        if (window.scrollY >= sectionTop &&
+            window.scrollY < sectionTop + sectionHeight) {
 
-            document.querySelector('header nav a[href*=' + id + ']')
-                .classList.add('active');
+            current = section.getAttribute('id');
         }
     });
 
-    // Add shadow effect to header while scrolling
-    let header = document.querySelector('header');
+    navLinks.forEach(link => {
 
-    header.classList.toggle('sticky', window.scrollY > 100);
-};
+        link.classList.remove('active');
 
-// Smooth reveal animation on scroll
-const revealElements = document.querySelectorAll(
-    '.project-card, .skill-box, .heading, .about p, .contact p'
-);
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
 
-const revealOnScroll = () => {
+    // Header shadow effect
+    const header = document.querySelector('header');
 
-    revealElements.forEach(element => {
+    if (window.scrollY > 50) {
+        header.classList.add('sticky');
+    } else {
+        header.classList.remove('sticky');
+    }
+
+    // Reveal elements while scrolling
+    revealElements();
+});
+
+
+// =========================
+// Reveal Animation
+// =========================
+
+function revealElements() {
+
+    const elements = document.querySelectorAll(
+        '.project-card, .skill-box, .heading, .about p, .contact p'
+    );
+
+    elements.forEach(element => {
 
         const windowHeight = window.innerHeight;
-        const revealTop = element.getBoundingClientRect().top;
+        const elementTop = element.getBoundingClientRect().top;
+
         const revealPoint = 100;
 
-        if (revealTop < windowHeight - revealPoint) {
+        if (elementTop < windowHeight - revealPoint) {
+
             element.classList.add('show');
+
+        } else {
+
+            element.classList.remove('show');
         }
     });
-};
+}
 
-// Run on page load
-window.addEventListener('load', revealOnScroll);
 
-// Run while scrolling
-window.addEventListener('scroll', revealOnScroll);
+// =========================
+// Smooth Scrolling
+// =========================
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('nav a').forEach(anchor => {
+navLinks.forEach(link => {
 
-    anchor.addEventListener('click', function (e) {
+    link.addEventListener('click', function (e) {
 
         e.preventDefault();
 
-        document.querySelector(this.getAttribute('href'))
-            .scrollIntoView({
-                behavior: 'smooth'
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+
+        if (targetSection) {
+
+            targetSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
             });
+        }
     });
 });
 
-// Console greeting
-console.log(
-    "Welcome to Jaswanth Paluru's Portfolio 🚀"
-);
+
+// =========================
+// Initialize on Page Load
+// =========================
+
+window.addEventListener('DOMContentLoaded', () => {
+
+    revealElements();
+
+    console.log(
+        "🚀 Welcome to Jaswanth Paluru's Portfolio"
+    );
+});
