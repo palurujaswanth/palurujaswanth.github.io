@@ -18,6 +18,7 @@
 body {
     background: var(--bg-color);
     color: var(--text-color);
+    overflow-x: hidden;
 }
 
 /* Header */
@@ -33,7 +34,12 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 100;
+    z-index: 1000;
+    transition: box-shadow 0.3s ease;
+}
+
+header.sticky {
+    box-shadow: 0 0 20px rgba(0, 171, 240, 0.4);
 }
 
 .logo {
@@ -48,7 +54,7 @@ nav a {
     color: var(--text-color);
     margin-left: 2rem;
     text-decoration: none;
-    transition: 0.3s;
+    transition: color 0.3s ease;
 }
 
 nav a:hover,
@@ -60,7 +66,7 @@ nav a.active {
 
 section {
     min-height: 100vh;
-    padding: 8rem 10% 2rem;
+    padding: 8rem 10% 3rem;
 }
 
 .heading {
@@ -79,6 +85,10 @@ section {
     text-align: center;
 }
 
+.home-content {
+    max-width: 800px;
+}
+
 .home-content h1 {
     font-size: 4rem;
     margin-bottom: 1rem;
@@ -95,9 +105,8 @@ section {
 
 .home-content p {
     font-size: 1.1rem;
-    max-width: 700px;
-    margin: 0 auto 2rem;
     line-height: 1.8;
+    margin-bottom: 2rem;
 }
 
 /* Social Icons */
@@ -118,7 +127,7 @@ section {
     color: var(--main-color);
     text-decoration: none;
     margin: 0 10px;
-    transition: 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .social-icons a:hover {
@@ -137,7 +146,7 @@ section {
     border-radius: 40px;
     text-decoration: none;
     font-weight: 600;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .btn:hover {
@@ -154,6 +163,7 @@ section {
     text-align: center;
     line-height: 2;
     font-size: 1.1rem;
+    color: var(--text-color);
 }
 
 /* Skills */
@@ -171,7 +181,7 @@ section {
     border: 2px solid transparent;
     border-radius: 10px;
     font-weight: 600;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .skill-box:hover {
@@ -192,7 +202,7 @@ section {
     padding: 2rem;
     border-radius: 20px;
     border: 2px solid transparent;
-    transition: 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .project-card:hover {
@@ -205,13 +215,54 @@ section {
     margin-bottom: 1rem;
 }
 
+.project-card p {
+    line-height: 1.6;
+}
+
 /* Contact */
 
 .contact {
     text-align: center;
 }
 
+/* Reveal Animation */
+
+.project-card,
+.skill-box,
+.heading,
+.about p,
+.contact p {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease,
+                transform 0.8s ease;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* Responsive Design */
+
+@media (max-width: 991px) {
+
+    header {
+        padding: 1.5rem 5%;
+    }
+
+    section {
+        padding: 8rem 5% 3rem;
+    }
+
+    .home-content h1 {
+        font-size: 3rem;
+    }
+
+    .home-content h3 {
+        font-size: 1.8rem;
+    }
+}
 
 @media (max-width: 768px) {
 
@@ -231,7 +282,7 @@ section {
     }
 
     .home-content h1 {
-        font-size: 2.8rem;
+        font-size: 2.5rem;
     }
 
     .home-content h3 {
@@ -239,29 +290,31 @@ section {
     }
 
     .heading {
-        font-size: 2.5rem;
+        font-size: 2.3rem;
+    }
+
+    .social-icons a {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
     }
 }
-/* Header Sticky Effect */
 
-header.sticky {
-    box-shadow: 0 0 20px rgba(0, 171, 240, 0.4);
-}
+@media (max-width: 480px) {
 
-/* Reveal Animation */
+    .home-content h1 {
+        font-size: 2rem;
+    }
 
-.project-card,
-.skill-box,
-.heading,
-.about p,
-.contact p {
+    .home-content h3 {
+        font-size: 1.2rem;
+    }
 
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.8s ease;
-}
+    .heading {
+        font-size: 2rem;
+    }
 
-.show {
-    opacity: 1;
-    transform: translateY(0);
+    .btn {
+        padding: 10px 25px;
+    }
 }
