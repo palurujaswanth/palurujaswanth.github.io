@@ -14,7 +14,9 @@
     --text-color: #ffffff;
     --main-color: #00abf0;
 }
-
+html {
+    scroll-padding-top: 100px;
+}
 body {
     background: var(--bg-color);
     color: var(--text-color);
